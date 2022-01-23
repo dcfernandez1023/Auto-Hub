@@ -1,0 +1,47 @@
+import { Model } from "./Model";
+import { v4 as uuidv4 } from "uuid";
+import { json } from "../custom_types/json";
+
+class ScheduledServiceType implements Model<ScheduledServiceType> {
+    id: string;
+    userCreated: string;
+    serviceName: string;
+    carsScheduled: {
+        [carId: string]: {
+            miles: number,
+            time: {quantity: number, units: string}
+        }
+    }
+
+    constructor(userCreated: string) {
+        this.id = uuidv4().toString();
+        this.userCreated = userCreated;
+        this.serviceName = "";
+        this.carsScheduled = {};
+    }
+
+    public toJson(exclude?: string[]): json {
+        let obj: json = {};
+        for(const [key, value] of Object.entries(this)) {
+            obj[key] = value;
+        }
+        if(exclude !== undefined) {
+            for(var i: number = 0; i < exclude.length; i++) {
+                let fieldToExclude: string = exclude[i];
+                delete obj[fieldToExclude];
+            }
+        }
+        return obj;
+    }
+
+    fromJson(data: json): ScheduledServiceType {
+        for(const [key, value] of Object.entries(this)) {
+            if(data[key] === undefined || typeof data[key] !== typeof value) {
+                throw new Error("Cannot construct User object from the JSON data provided.");
+            }
+        }
+        return new ScheduledServiceType(data.userCreated);
+    }
+}
+
+export { ScheduledServiceType };

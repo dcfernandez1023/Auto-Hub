@@ -1,0 +1,118 @@
+import { Cost, newCost } from "./Cost";
+import { Model } from "./Model";
+import { v4 as uuidv4 } from "uuid";
+import { json } from "../custom_types/json";
+import { ScheduledService } from "./ScheduledService";
+import { RepairService } from "./RepairService";
+
+class Car implements Model<Car> {
+    id: string;
+    userCreated: string;
+    dateCreated: number;
+    imageId: string;
+    imageUrl: string;
+    scheduledCost: Cost;
+    repairCost: Cost;
+    year: string;
+    make: string;
+    model: string;
+    name: string;
+    licensePlate: string;
+    mileage: number;
+    vinNumber: string;
+    scheduledLog: ScheduledService[];
+    repairLog: RepairService[];
+    notes: string;
+
+    constructor(
+        userCreated: string, 
+        year: string, 
+        make: string, 
+        model: string, 
+        name: string, 
+        licensePlate?: string, 
+        vinNumber?: string, 
+        mileage?: number, 
+        notes?: string, 
+        dateCreated?: number,
+
+    ) {
+        this.id = uuidv4().toString();
+        this.userCreated = userCreated;
+        this.dateCreated = dateCreated === undefined ? new Date().getTime() : dateCreated;
+        this.imageUrl = "";
+        this.scheduledCost = newCost();
+        this.repairCost = newCost();
+        this.year = year;
+        this.make = make;
+        this.model = model;
+        this.name = name;
+        this.licensePlate = licensePlate === undefined ? "" : licensePlate;
+        this.mileage = mileage === undefined ? 0 : mileage;
+        this.vinNumber = vinNumber === undefined ? "" : vinNumber;
+        this.scheduledLog = [];
+        this.repairLog = [];
+        this.notes = notes === undefined ? "" : notes;
+    }
+
+    public static getModalMetadata = (): json[] => {
+        const getYears = (startYear: number): string[] => {
+            let currentYear = new Date().getFullYear();
+            let years = [];
+            while(currentYear >= startYear) {
+              years.push((currentYear--).toString());
+            }
+            return years;
+        }
+        return [
+            {id: "car-modal-name", field: "name", display: "Name", element: "input", required: true, col: 6, type: "string"},
+            {id: "car-modal-mileage", field: "mileage", display: "Mileage", element: "input", required: true, col: 6, type: "number"},
+            {id: "car-modal-year", field: "year", display: "Year", element: "select", options: getYears(1900), required: true, col: 4, type: "string"},
+            {id: "car-modal-make", field: "make", display: "Make", element: "input", required: true, col: 4, type: "string"},
+            {id: "car-modal-model", field: "model", display: "Model", element: "input", required: true, col: 4, type: "string"},
+            {id: "car-modal-licensePlate", field: "licensePlate", display: "License Plate #", element: "input", required: true, col: 6, type: "string"},
+            {id: "car-modal-vinNumber", field: "vinNumber", display: "VIN #", element: "input", required: false, col: 6, type: "string"},
+            {id: "car-modal-notes", field: "notes", display: "Notes", element: "textarea", required: false, col: 12, type: "string"},
+            {id: "car-modal-imageId", field: "imageId", display: "Image", element: "file", required: false, col: 12, type: "file"}
+        ];
+    }
+
+    public getPropertyAsString<K extends keyof Car>(key: K): string {
+        return this[key].toString();
+    }
+
+    public toJson(exclude?: string[]): json {
+        let obj: json = {};
+        for(const [key, value] of Object.entries(this)) {
+            obj[key] = value;
+        }
+        if(exclude !== undefined) {
+            for(var i: number = 0; i < exclude.length; i++) {
+                let fieldToExclude: string = exclude[i];
+                delete obj[fieldToExclude];
+            }
+        }
+        return obj;
+    }
+
+    public fromJson(data: json): Car {
+        return Car.fromJson(data);
+    }
+
+    public static fromJson(data: json): Car {
+        return new Car(
+            data.userCreated,
+            data.year,
+            data.make,
+            data.model,
+            data.name,
+            data.licensePlate,
+            data.vinNumber,
+            data.mileage,
+            data.notes,
+            data.dateCreated
+        );
+    }
+}
+
+export { Car };

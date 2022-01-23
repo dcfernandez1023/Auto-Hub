@@ -1,0 +1,60 @@
+.dropdown-toggle::after {
+  content: none !important;
+}
+
+.dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.login-button {  
+  box-shadow: rgb(0 0 0 / 25%) 0px 4px 4px 0px;
+  width: 60%;
+}
+
+.btn.auto-hub-button {
+  background-color: #ECF0F1;
+  box-shadow: rgb(0 0 0 / 25%) 0px 2px 2px 0px;
+}
+
+.btn.shadow-button {
+  box-shadow: rgb(0 0 0 / 25%) 0px 2px 2px 0px;
+}
+
+.col-spacing {
+  margin-bottom: 10px;
+}
+
+.col-spacing-lg {
+  margin-bottom: "100px";
+}
+
+.navbar-linear {
+  background: #A9CCE3;
+  background: linear-gradient(90deg, #5499C7 0%, #2471A3 100%);
+}
+
+.clickable-card {
+  cursor: pointer;
+}
+
+.clickable-card a:hover {
+  background-color: yellow;
+}
+
+.home-cards {
+  height: 550px;
+  width: 100%;
+}
+
+.home-cards-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

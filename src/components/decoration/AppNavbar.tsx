@@ -36,6 +36,7 @@ const AppNavbar = (props: {user: undefined | null | json}) => {
               <Dropdown.Toggle
                 variant="light"
                 style={{margin: "1%", float: "right"}}
+                className="nav-profile nav-profile-menu"
               >
                 👤
               </Dropdown.Toggle>

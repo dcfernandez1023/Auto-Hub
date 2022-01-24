@@ -42,7 +42,7 @@ const NewsWidget = (props: {showFull: boolean}) => {
                                 style={{textDecoration:"none",color:"black"}}
                             >
                                 <Card style={{height: "100%"}}>
-                                    <Card.Img variant="top" src={article.imageUrl} />
+                                    <Card.Img variant="top" src={article.imageUrl} style={{height: "200px"}} />
                                     <Card.Body>
                                         <Card.Title> {article.source} </Card.Title>
                                         <Card.Text> {article.title} </Card.Text>

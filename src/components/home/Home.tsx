@@ -35,7 +35,7 @@ const Home = (props: {user: json, setError: Function}) => {
                     :
                         <div>
                             <span style={{float: "right", marginLeft: "8px"}}>
-                                <Button variant="light" className="auto-hub-button" onClick={() => setShowCarModal(true)}>
+                                <Button variant="success" className="shadow-button" onClick={() => setShowCarModal(true)}>
                                         +
                                 </Button>
                             </span>
@@ -43,7 +43,7 @@ const Home = (props: {user: json, setError: Function}) => {
                                 <ListGroup variant="flush">
                                     {cars.map((car: Car, index: number): any => {
                                         return (
-                                            <ListGroup.Item action onClick={() => window.location.href = "/car/" + car.id}>
+                                            <ListGroup.Item key={"car-list-" + index.toString() + "-" + car.id} action onClick={() => window.location.href = "/car/" + car.id}>
                                                 <Row>
                                                     <Col xs={8}>
                                                         <div style={{fontSize: "20px"}}> {car.name} </div>

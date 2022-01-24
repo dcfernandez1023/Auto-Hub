@@ -10,6 +10,10 @@ const CAR_CONTROLLER = new CarController();
 const SstPageService = (props: {user: json, setError: Function}) => {
     const[ssts, setSsts] = useState<Sst[]>();
     const[cars, setCars] = useState<Car[]>();
+    const[sst, setSst] = useState<Sst>();
+    const[showSstModal, setShowSstModal] = useState<boolean>(false);
+    const[showDelete, setShowDelete] = useState<boolean>(false);
+    const[mode, setMode] = useState<"create" | "edit">("create");
 
     const getSstDisplayData = (userSsts: Sst[], userCars: Car[]): json[] => {
         let carsJson: json = {};
@@ -21,8 +25,8 @@ const SstPageService = (props: {user: json, setError: Function}) => {
         // construct display data 
         let displayData: json[] = [];
         for(var n: number = 0; n < userSsts.length; n++) {
-            let data: json = {sstName: "", carsApplied: []};
             let sst: Sst = userSsts[n];
+            let data: json = {sstName: "", carsApplied: [], sst: sst};
             data.sstName = sst.serviceName;
             for(var carIndex: number = 0; carIndex < userCars.length; carIndex++) {
                 let carId: string = userCars[carIndex].id;
@@ -38,17 +42,14 @@ const SstPageService = (props: {user: json, setError: Function}) => {
             }
             displayData.push(data);
         }
-        console.log(displayData);
         return displayData;
     }
 
     const getSstCallback = (userSsts: Sst[]) => {
-        console.log(userSsts);
         setSsts(userSsts);
     }
 
     const getCarsCallback = (userCars: Car[]) => {
-        console.log(userCars);
         setCars(userCars);
     }
 
@@ -69,6 +70,14 @@ const SstPageService = (props: {user: json, setError: Function}) => {
     return {
         ssts,
         cars,
+        sst,
+        setSst,
+        showSstModal,
+        showDelete,
+        setShowDelete,
+        mode,
+        setMode,
+        setShowSstModal,
         getSstDisplayData
     }
 }

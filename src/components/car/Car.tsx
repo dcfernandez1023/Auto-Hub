@@ -29,7 +29,7 @@ const Car = (props: {user: json, setError: Function}) => {
              : car.imageUrl;
         return (
             <div>
-                <Card className="home-cards">
+                <Card>
                     <Card.Header> <Card.Title> ℹ️ About </Card.Title> </Card.Header>
                     <Row>
                         <Col style={{textAlign: "right"}}>

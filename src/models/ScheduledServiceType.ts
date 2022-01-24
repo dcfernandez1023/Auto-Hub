@@ -4,7 +4,7 @@ import { json } from "../custom_types/json";
 type sstSchedule = {
     [carId: string]: {
         miles: number,
-        time: {quantity: number, units: "day" | "week" | "month" | "year"}
+        time: {quantity: number, units: string}
     }
 }
 

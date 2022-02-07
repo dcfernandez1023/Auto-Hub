@@ -47,13 +47,19 @@ const SstPage = (props: {user: json, setError: Function}) => {
                     show={showSstModal}
                     sst={sst}
                     cars={cars}
-                    onClose={() => setShowSstModal(false)}
+                    onClose={() => {
+                        setSst(undefined);
+                        setShowSstModal(false);
+                    }}
                     setError={props.setError}
                 />
                 <DeleteSstModal
                     show={showDelete}
                     sst={sst}
-                    onClose={() => setShowDelete(false)}
+                    onClose={() => {
+                        setSst(undefined);
+                        setShowDelete(false);
+                    }}
                     setError={props.setError}
                 />
                 <Accordion>
@@ -126,7 +132,8 @@ const SstPage = (props: {user: json, setError: Function}) => {
                 </Col>
                 <Col xs={2} style={{textAlign: "right"}}>
                     <Button variant="success" className="shadow-button" onClick={() => {
-                        setSst(undefined);
+                        // setSst(undefined);
+                        //setMode("create");
                         setShowSstModal(true);
                     }}
                     > 

@@ -100,9 +100,14 @@ const SstModalService = (props: {user: json, mode: "create" | "edit", show: bool
     }
 
     const onClose = () => {
+        // setSst(constructScheduledServiceType(props.user.email));
         setSst(props.sst === undefined ? constructScheduledServiceType(props.user.email) : props.sst);
         setValidated(false);
         setIsLoading(false);
+        setEveryMileage(0);
+        setEveryTimeQuantity(0);
+        setEveryTimeUnits("");
+        setSelectedVehicles({});
         props.onClose();
     }
 

@@ -3,7 +3,9 @@ import {
     Row,
     Col,
     Card,
-    Button
+    Button,
+    Tabs,
+    Tab
 } from "react-bootstrap";
 import { json } from "../../custom_types/json";
 import CarService from "./CarService";
@@ -12,15 +14,18 @@ import ApiSpinner from "../decoration/ApiSpinner";
 import UpcomingMaintenance from "./UpcomingMaintenance";
 import CarForm from "./CarForm";
 import CarModal from "./CarModal";
-import CarSst from "./CarSst";
 import CostBreakdown from "./CostBreakdown";
+import Log from "./Log";
 
 const Car = (props: {user: json, setError: Function}) => {
     const {
         car,
+        setCar,
         carModalShow,
         setCarModalShow,
-        carId
+        carId,
+        ssts,
+        setSsts
     } = CarService(props);
 
     const renderCarInfo = () => {
@@ -69,7 +74,7 @@ const Car = (props: {user: json, setError: Function}) => {
         );
     }
     return (
-        <Container>
+        <Container fluid>
             <CarModal 
                 mode="update"
                 user={props.user}
@@ -78,18 +83,42 @@ const Car = (props: {user: json, setError: Function}) => {
                 onClose={() => setCarModalShow(false)}
                 setError={props.setError}
             />
-            <Row>
-                <Col lg={6} style={{marginBottom: "25px"}}>
-                    {renderCarInfo()}
-                </Col>
-                <Col lg={6} style={{marginBottom: "25px"}}>
+            <Tabs defaultActiveKey="car">
+                <Tab eventKey="car" title="Vehicle">
+                    <br/>
                     <Row>
-                        <Col lg={12} style={{marginBottom: "25px"}}> <UpcomingMaintenance /> </Col>
-                        <Col lg={12} style={{marginBottom: "25px"}}> <CarSst /> </Col>
-                        <Col lg={12} style={{marginBottom: "25px"}}> <CostBreakdown /> </Col>
+                        <Col lg={6} style={{marginBottom: "25px"}}>
+                            {renderCarInfo()}
+                        </Col>
+                        <Col lg={6} style={{marginBottom: "25px"}}>
+                            <Row>
+                                <Col lg={12} style={{marginBottom: "25px"}}> <UpcomingMaintenance /> </Col>
+                                <Col lg={12} style={{marginBottom: "25px"}}> <CostBreakdown /> </Col>
+                            </Row>
+                        </Col>
                     </Row>
-                </Col>
-            </Row>
+                </Tab>
+                <Tab eventKey="scheduledLog" title="Scheduled Log">
+                    <br/>
+                    <Log 
+                        type="scheduled"
+                        log={car.scheduledLog}
+                        car={car}
+                        onChangeLog={() => {}}
+                        onSave={() => {}}
+                    />
+                </Tab>
+                <Tab eventKey="repairLog" title="Repair Log">
+                    <br/>
+                    <Log 
+                        type="repair"
+                        log={car.repairLog}
+                        car={car}
+                        onChangeLog={() => {}}
+                        onSave={() => {}}
+                    />
+                </Tab>
+            </Tabs>
         </Container>
     );
 }

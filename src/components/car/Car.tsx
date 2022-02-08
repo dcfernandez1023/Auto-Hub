@@ -30,7 +30,7 @@ const Car = (props: {user: json, setError: Function}) => {
 
     const renderCarInfo = () => {
         let imgSrc: string = (car === undefined || car === null || car.imageUrl.trim().length === 0)
-             ? "/car_holder.jpg" 
+             ? "/car_holder.jpg"
              : car.imageUrl;
         return (
             <div>
@@ -38,13 +38,13 @@ const Car = (props: {user: json, setError: Function}) => {
                     <Card.Header> <Card.Title> ℹ️ About </Card.Title> </Card.Header>
                     <Row>
                         <Col style={{textAlign: "right"}}>
-                            <Button 
-                                style={{margin: "10px"}} 
-                                variant="light" 
-                                className="auto-hub-button" 
+                            <Button
+                                style={{margin: "10px"}}
+                                variant="light"
+                                className="auto-hub-button"
                                 onClick={() => setCarModalShow(true)}
-                            > 
-                                ✏️ 
+                            >
+                                ✏️
                             </Button>
                         </Col>
                     </Row>
@@ -52,7 +52,7 @@ const Car = (props: {user: json, setError: Function}) => {
                         <div style={{textAlign: "center"}}>
                             <Card.Img style={{height: "150px", width: "150px"}} variant="top" src={imgSrc} />
                         </div>
-                        <CarForm 
+                        <CarForm
                             car={car}
                             onChangeElement={() => {return}}
                             mode="view"
@@ -75,7 +75,7 @@ const Car = (props: {user: json, setError: Function}) => {
     }
     return (
         <Container fluid>
-            <CarModal 
+            <CarModal
                 mode="update"
                 user={props.user}
                 car={car}
@@ -100,7 +100,8 @@ const Car = (props: {user: json, setError: Function}) => {
                 </Tab>
                 <Tab eventKey="scheduledLog" title="Scheduled Log">
                     <br/>
-                    <Log 
+                    <Log
+                        user={props.user}
                         type="scheduled"
                         log={car.scheduledLog}
                         car={car}
@@ -110,7 +111,8 @@ const Car = (props: {user: json, setError: Function}) => {
                 </Tab>
                 <Tab eventKey="repairLog" title="Repair Log">
                     <br/>
-                    <Log 
+                    <Log
+                        user={props.user}
                         type="repair"
                         log={car.repairLog}
                         car={car}

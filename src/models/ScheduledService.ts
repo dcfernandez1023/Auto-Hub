@@ -9,7 +9,7 @@ interface ScheduledService extends Service {
     nextServiceMileage: string;
 }
 
-const newScheduledService = (userCreated: string, carRefId: string, sstRefId: string) => {
+const newScheduledService = (userCreated: string, carRefId: string, sstRefId: string): ScheduledService => {
     let scheduledService: ScheduledService = {
         id: uuidv4().toString(),
         userCreated: userCreated,
@@ -29,72 +29,24 @@ const newScheduledService = (userCreated: string, carRefId: string, sstRefId: st
     return scheduledService;
 }
 
-// const metadata: json[] = [
-//     {
-//         key: "datePerformed",
-//         display: "Date Performed",
-//         type: "number",
-//         element: "date",
-//         editable: true
-//     },
-//     {
-//         key: "serviceName",
-//         display: "Service Name",
-//         type: "string",
-//         element: "select",
-//         editable: true
-//     },
-//     {
-//         key: "mileage",
-//         display: "Mileage",
-//         type: "number",
-//         element: "input",
-//         editable: true
-//     },
-//     {
-//         key: "nextServiceDate",
-//         display: "Next Service Date",
-//         type: "number",
-//         element: "input",
-//         editable: false
-//     },
-//     {
-//         key: "nextServiceMileage",
-//         display: "Next Service Mileage",
-//         type: "number",
-//         element: "input",
-//         editable: false
-//     },
-//     {
-//         key: "partsCost",
-//         display: "Next Service Mileage",
-//         type: "number",
-//         element: "input",
-//         editable: true
-//     },
-//     {
-//         key: "laborCost",
-//         display: "Next Service Mileage",
-//         type: "number",
-//         element: "input",
-//         editable: true
-//     },
-//     {
-//         key: "totalCost",
-//         display: "Total Cost",
-//         type: "number",
-//         element: "input",
-//         editable: true
-//     },
-//     {
-//         key: "notes",
-//         display: "Notes",
-//         type: "string",
-//         element: "textarea",
-//         editable: true
-//     }
-// ];
+const fromJson = (serviceJson: json): ScheduledService => {
+    return {
+        id: serviceJson.id,
+        userCreated: serviceJson.userCreated,
+        carRefId: serviceJson.carRefId,
+        datePerformed: typeof serviceJson.datePerformed === "number" ? serviceJson.datePerformed : new Date().getTime(),
+        serviceName: serviceJson.serviceName,
+        mileage: typeof serviceJson.mileage === "number" ? serviceJson.mileage : 0,
+        partsCost: typeof serviceJson.mileage === "number" ? serviceJson.mileage : 0,
+        laborCost: typeof serviceJson.mileage === "number" ? serviceJson.mileage : 0,
+        totalCost: typeof serviceJson.mileage === "number" ? serviceJson.mileage : 0,
+        notes: serviceJson.notes,
+        serviceType: "scheduled",
+        sstRefId: serviceJson.sstRefId,
+        nextServiceDate: serviceJson.nextServiceDate,
+        nextServiceMileage: serviceJson.nextServiceDate
+    }
+}
 
 export type { ScheduledService };
-// export { metadata };
-export { newScheduledService };
+export { newScheduledService, fromJson };

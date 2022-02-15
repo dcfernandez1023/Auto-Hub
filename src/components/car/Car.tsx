@@ -25,7 +25,10 @@ const Car = (props: {user: json, setError: Function}) => {
         setCarModalShow,
         carId,
         ssts,
-        setSsts
+        setSsts,
+        updateCar,
+        getLastTab,
+        setLastTab
     } = CarService(props);
 
     const renderCarInfo = () => {
@@ -83,7 +86,7 @@ const Car = (props: {user: json, setError: Function}) => {
                 onClose={() => setCarModalShow(false)}
                 setError={props.setError}
             />
-            <Tabs defaultActiveKey="car">
+            <Tabs defaultActiveKey={getLastTab()} onSelect={(tabKey: any) => setLastTab(tabKey)}>
                 <Tab eventKey="car" title="Vehicle">
                     <br/>
                     <Row>
@@ -103,10 +106,11 @@ const Car = (props: {user: json, setError: Function}) => {
                     <Log
                         user={props.user}
                         type="scheduled"
+                        ssts={ssts}
                         log={car.scheduledLog}
                         car={car}
                         onChangeLog={() => {}}
-                        onSave={() => {}}
+                        onSave={updateCar}
                     />
                 </Tab>
                 <Tab eventKey="repairLog" title="Repair Log">
@@ -114,10 +118,11 @@ const Car = (props: {user: json, setError: Function}) => {
                     <Log
                         user={props.user}
                         type="repair"
+                        ssts={ssts}
                         log={car.repairLog}
                         car={car}
                         onChangeLog={() => {}}
-                        onSave={() => {}}
+                        onSave={updateCar}
                     />
                 </Tab>
             </Tabs>

@@ -15,6 +15,18 @@ const CarService = (props: {user: json, setError: Function}) => {
     
     let { carId } = useParams<string>();
 
+    const getLastTab = (): string => {
+        let lastTab: undefined | null | string = window.localStorage.getItem("lastTab");
+        if(lastTab === undefined || lastTab === null || lastTab.trim().length === 0) {
+          return "car";
+        }
+        return lastTab.toString();
+    }
+
+    const setLastTab = (tab: string) => {
+        window.localStorage.setItem("lastTab", tab);
+    }
+
     const getCar = useCallback(() => {
         if(carId === undefined) {
             return;
@@ -26,6 +38,10 @@ const CarService = (props: {user: json, setError: Function}) => {
             props.setError
         );
     }, [props.user.email, props.setError, carId])
+
+    const updateCar = (car: Car, callback: Function) => {
+        CONTROLLER.update(car, callback, props.setError);
+    }
 
     const getSstCallback = (userSsts: Sst[]) => {
         setSsts(userSsts);
@@ -47,7 +63,10 @@ const CarService = (props: {user: json, setError: Function}) => {
         setCarModalShow,
         carId,
         ssts,
-        setSsts
+        setSsts,
+        updateCar,
+        getLastTab,
+        setLastTab
     }
 }
 
